@@ -9,21 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sleep for 10 seconds
-        run:
+        run: |
             sleep 10
-    steps:
+
       - name: Sleep for 100 seconds
-        run:
+        run: |
             sleep 100
-    steps:
+
       - name: Sleep for 1000 seconds
-        run:
+        run: |
             sleep 1000
-    steps:
+
       - name: Sleep for 10000 seconds
-        run:
+        run: |
             sleep 10000
-    steps:
+
       - name: Sleep for 100000 seconds
-        run:
+        run: |
             sleep 100000
