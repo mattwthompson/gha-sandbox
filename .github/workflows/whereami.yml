@@ -1,0 +1,19 @@
+name: Sleep
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: sleep tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dude, where's my dir?
+        run: |
+            echo "pwd is"
+            pwd
+            echo "stuff here is "
+            ls
+            echo "\$HOME is " at $HOME
+            echo "up one dir is"
+            ls ..
