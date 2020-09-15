@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    name: sleep tests
+    name: exploring things 
     runs-on: ubuntu-latest
     steps:
       - name: Dude, where's my dir?
