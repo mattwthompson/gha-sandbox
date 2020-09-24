@@ -10,6 +10,6 @@ jobs:
     name: event conditionals
     runs-on: ubuntu-latest
     steps:
-      - name: Printing event name
+      - name: Printing env
         run: |
-            echo "Hello ${{ github.event.name }}!"
+            env
