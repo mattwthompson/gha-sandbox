@@ -12,4 +12,6 @@ jobs:
     steps:
       - name: Printing env
         run: |
-            env
+            if [[ "$GITHUB_EVENT_NAME" == "push" ]];
+              echo "caught"
+            fi
