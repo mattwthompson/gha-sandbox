@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  test:
+    name: Debugging AmberTools differences
+    runs-on: ${{ matrix.cfg.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - 3.6
+        cfg:
+          - os: ubuntu-latest
+            rdkit: "true"
+            openeye: "false"
+
+          - os: macOS-latest
+            rdkit: "true"
+            openeye: "false"
+
+    env:
+      CI_OS: ${{ matrix.cfg.os }}
+      RDKIT: ${{ matrix.cfg.rdkit }}
+      OPENEYE: ${{ matrix.cfg.openeye }}
+      PYVER: ${{ matrix.python-version }}
+      PACKAGE: openforcefield
+      PYTEST_ARGS: -r fE --tb=short --cov=openforcefield --cov-config=setup.cfg --cov-append --cov-report=xml
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: conda-incubator/setup-miniconda@v1
+        name: Install only RDKit
+        if: ${{ matrix.cfg.rdkit == 'TRUE' && matrix.cfg.openeye == 'FALSE' }}
+        with:
+          python-version: ${{ matrix.python-version }}
+          activate-environment: test
+          environment-file: devtools/conda-envs/rdkit.yaml
+          auto-activate-base: false
+
+      - name: Additional info about the build
+        shell: bash -l {0}
+        run: |
+          uname -a
+          df -h
+          ulimit -a
+
+      - name: Environment Information
+        shell: bash -l {0}
+        run: |
+          conda info
+          conda list
+
+      - name: Install package
+        shell: bash -l {0}
+        run: |
+          python -m pip install --no-deps -v .
+
+      - name: Check installed toolkits
+        shell: bash -l {0}
+        run: |
+          if [[ "$OPENEYE" == true ]]; then
+            python -c "from openforcefield.utils.toolkits import OPENEYE_AVAILABLE; assert OPENEYE_AVAILABLE, 'OpenEye unavailable'"
+          fi
+          if [[ "$OPENEYE" == false ]]; then
+            if [[ $(conda list | grep openeye-toolkits) ]]; then
+              conda remove --force openeye-toolkits --yes
+            fi
+            python -c "from openforcefield.utils.toolkits import OPENEYE_AVAILABLE; assert not OPENEYE_AVAILABLE, 'OpenEye unexpectedly found'"
+          fi
+          if [[ "$RDKIT" == true ]]; then
+            python -c "from openforcefield.utils.toolkits import RDKIT_AVAILABLE; assert RDKIT_AVAILABLE, 'RDKit unavailable'"
+          fi
+          if [[ "$RDKIT" == false ]]; then
+            if [[ $(conda list | grep rdkit) ]]; then
+              conda remove --force rdkit --yes
+            fi
+            python -c "from openforcefield.utils.toolkits import RDKIT_AVAILABLE; assert not RDKIT_AVAILABLE, 'RDKit unexpectedly found'"
+          fi
+
+      - name: Check links
+        shell: bash -l {0}
+        if: ${{ matrix.cfg.rdkit == 'true' && matrix.cfg.openeye == 'TRUE' }}
+        continue-on-error: true
+        run: |
+          python check_ambertools.py
+
