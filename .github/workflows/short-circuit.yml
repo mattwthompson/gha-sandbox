@@ -1,8 +1,7 @@
 name: Short circuiting via saving a variable
 # Needs to be updated against
 # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
-on:
-  workflow_dispatch:
+on: [push, pull_request]
 
 jobs:
   test:
