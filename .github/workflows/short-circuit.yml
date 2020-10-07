@@ -1,0 +1,25 @@
+name: Short circuiting via saving a variable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: short circuit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set var action_condition to true
+        echo ::set-env name=action_condition::true
+
+      - name: Sleep for 10 seconds
+        if: ${{ env.action_condition == 'true' }}
+        run: |
+            echo "it is TRUE"
+
+      - name: Set var action_condition to false 
+        echo ::set-env name=action_condition::false
+
+      - name: Sleep for 10 seconds
+        if: ${{ env.action_condition == 'true' }}
+        run: |
+            echo "it is TRUE"
