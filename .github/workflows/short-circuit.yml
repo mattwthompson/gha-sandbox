@@ -1,5 +1,6 @@
 name: Short circuiting via saving a variable
-
+# Needs to be updated against
+# https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
 on:
   workflow_dispatch:
 
@@ -9,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set var action_condition to true
-        echo ::set-env name=action_condition::true
+        run: echo "::set-env name=action_condition::true"
 
       - name: Sleep for 10 seconds
         if: ${{ env.action_condition == 'true' }}
@@ -17,7 +18,7 @@ jobs:
             echo "it is TRUE"
 
       - name: Set var action_condition to false 
-        echo ::set-env name=action_condition::false
+        run: echo "::set-env name=action_condition::false"
 
       - name: Sleep for 10 seconds
         if: ${{ env.action_condition == 'true' }}
