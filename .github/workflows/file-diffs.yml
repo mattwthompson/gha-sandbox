@@ -1,0 +1,16 @@
+name: File diffs
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: querying file diffs against origin/master
+    runs-on: ubuntu-latest
+    steps:
+      - name: git diff
+        run: |
+            git diff origin/master HEAD
+
+      - name: git diff
+        run: |
+            git diff --name-only origin/master HEAD
