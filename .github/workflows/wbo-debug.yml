@@ -30,7 +30,7 @@ jobs:
       PYTEST_ARGS: -r fE --tb=short --cov=openforcefield --cov-config=setup.cfg --cov-append --cov-report=xml
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
 
       - uses: conda-incubator/setup-miniconda@v2
         name: Install only RDKit
