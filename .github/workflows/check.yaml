@@ -22,6 +22,13 @@ jobs:
         run: |
           git diff-index --quiet HEAD
 
+      - name: Regenerate identical file
+        run: echo "foo" > file.txt
+
+      - name: Error if anything changed
+        run: |
+          git diff-index --quiet HEAD
+
       - name: Modify file
         run: echo "foo123" > file.txt
 
