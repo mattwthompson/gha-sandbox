@@ -10,29 +10,21 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: Debugging AmberTools differences
+    name: Check untracked files
     strategy:
       fail-fast: false
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: See what's changed
+
+      - name: Error if anything changed
         run: |
           git diff-index --quiet HEAD
 
       - name: Modify file
         run: echo "foo123" > file.txt
 
-      - name: See what's changed
+      - name: Error if anything changed
         run: |
           git diff-index --quiet HEAD
-
-      - name: Error if anything's changed
-        run:
-          if git diff-index --quiet HEAD; then
-            echo "changes_exist=true"
-          else
-            echo "changes_exist=false"
-          fi
