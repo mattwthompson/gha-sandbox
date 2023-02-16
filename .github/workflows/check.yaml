@@ -18,20 +18,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Error if anything changed
+      - name: See if anything changed
         run: |
-          git diff-index --quiet HEAD
+          if test "$( git diff | wc | awk '{print $1}' )" -gt 0
+          then
+              echo 'greater than'
+          else
+              echo 'not greater than'
+          fi
 
       - name: Regenerate identical file
         run: echo "foo" > file.txt
 
-      - name: Error if anything changed
+      - name: See if anything changed
         run: |
-          git diff-index --quiet HEAD
+          if test "$( git diff | wc | awk '{print $1}' )" -gt 0
+          then
+              echo 'greater than'
+          else
+              echo 'not greater than'
+          fi
 
-      - name: Modify file
+      - name: Generate new file
         run: echo "foo123" > file.txt
 
-      - name: Error if anything changed
+      - name: See if anything changed
         run: |
-          git diff-index --quiet HEAD
+          if test "$( git diff | wc | awk '{print $1}' )" -gt 0
+          then
+              echo 'greater than'
+          else
+              echo 'not greater than'
+          fi
