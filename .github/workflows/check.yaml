@@ -1,4 +1,12 @@
-name: 
+name:
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   test:
     name: Debugging AmberTools differences
