@@ -9,6 +9,7 @@ on:
 
 jobs:
   test:
+    runs-on: ubuntu-latest
     name: Debugging AmberTools differences
     strategy:
       fail-fast: false
