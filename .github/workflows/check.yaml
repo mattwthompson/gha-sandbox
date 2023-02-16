@@ -1,0 +1,21 @@
+name: 
+jobs:
+  test:
+    name: Debugging AmberTools differences
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: See what's changed
+        run: |
+          git diff-index --quiet HEAD
+
+      - name: Create random file
+        run: echo "foo" > file.txt
+
+      - name: See what's changed
+        run: |
+          git diff-index --quiet HEAD
