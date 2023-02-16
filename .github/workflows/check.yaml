@@ -1,0 +1,52 @@
+name:
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Check untracked files
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: See if anything changed
+        run: |
+          if test "$( git diff | wc | awk '{print $1}' )" -gt 0
+          then
+              echo 'greater than'
+          else
+              echo 'not greater than'
+          fi
+
+      - name: Regenerate identical file
+        run: echo "foo" > file.txt
+
+      - name: See if anything changed
+        run: |
+          if test "$( git diff | wc | awk '{print $1}' )" -gt 0
+          then
+              echo 'greater than'
+          else
+              echo 'not greater than'
+          fi
+
+      - name: Generate new file
+        run: echo "foo123" > file.txt
+
+      - name: See if anything changed
+        run: |
+          if test "$( git diff | wc | awk '{print $1}' )" -gt 0
+          then
+              echo 'greater than'
+          else
+              echo 'not greater than'
+          fi
