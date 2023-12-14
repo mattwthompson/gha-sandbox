@@ -16,12 +16,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up conda environment with micromamba
-      uses: mamba-org/setup-micromamba@v1
-      with:
-        environment-name: dude-wheres-my-snake
-        create-args: >-
-          python=${{ matrix.python-version }}
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+
+    - name: Install micromamba via brew
+      run: |
+        brew install micromamba
+        micromamba init bash
+        source ~/.bashrc
     
     - name: Look for micromamba
       run: |
