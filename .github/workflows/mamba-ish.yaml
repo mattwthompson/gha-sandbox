@@ -1,0 +1,36 @@
+name: CI
+
+on: [push, pull_request]
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  test:
+    name: mamba executables?
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up conda environment with micromamba
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        create-args: >-
+          python=${{ matrix.python-version }}
+    
+    - name: Look for micromamba
+      run: |
+        which micromamba
+        micromamba --version
+        micromamba list
+    
+    - name: Look for mamba
+      run: |
+        which mamba
+        mamba --version
+        mamba list
+    
