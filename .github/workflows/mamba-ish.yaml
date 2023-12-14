@@ -19,6 +19,7 @@ jobs:
     - name: Set up conda environment with micromamba
       uses: mamba-org/setup-micromamba@v1
       with:
+        environment-name: dude-wheres-my-snake
         create-args: >-
           python=${{ matrix.python-version }}
     
