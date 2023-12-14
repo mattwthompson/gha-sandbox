@@ -37,7 +37,7 @@ jobs:
         which -a conda
         conda --version
         conda list
-        micromamba whoneeds -t conda
+        micromamba repoquery -t conda
         micromamba uninstall conda
     
     - name: Look for mamba
