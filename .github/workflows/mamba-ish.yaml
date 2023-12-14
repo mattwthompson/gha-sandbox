@@ -1,4 +1,4 @@
-name: CI
+name: mamba executable debugging
 
 on: [push, pull_request]
 
@@ -25,13 +25,13 @@ jobs:
     
     - name: Look for micromamba
       run: |
-        which micromamba
+        which -a micromamba
         micromamba --version
         micromamba list
     
     - name: Look for mamba
       run: |
-        which mamba
+        which -a mamba
         mamba --version
         mamba list
     
