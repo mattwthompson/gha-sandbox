@@ -23,7 +23,7 @@ jobs:
     - name: Install micromamba via brew
       run: |
         brew install micromamba
-        micromamba init bash
+        micromamba shell init -s bash
         source ~/.bashrc
     
     - name: Look for micromamba
