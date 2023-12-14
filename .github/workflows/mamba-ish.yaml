@@ -32,6 +32,12 @@ jobs:
         micromamba --version
         micromamba list
     
+    - name: Look for conda
+      run: |
+        which -a conda
+        conda --version
+        conda list
+    
     - name: Look for mamba
       run: |
         which -a mamba
